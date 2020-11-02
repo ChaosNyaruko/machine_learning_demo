@@ -14,7 +14,7 @@ def logistic(x):
 def logistic_derivative(x):
     return logistic(x) * (1 - logistic(x))
 
-class NeurualNetwork:
+class NeuralNetwork:
     def __init__(self, layers, activation='tanh'):
         """
         :param layers: A list containing the number of units in each layer
@@ -46,12 +46,12 @@ class NeurualNetwork:
             a = [X[i]]
 
             for l in range(len(self.weights)):
-                a.append(self.activation(np.dot(a[1], self.weights[1])))
+                a.append(self.activation(np.dot(a[l], self.weights[l])))
             error = y[i] - a[-1]
             deltas = [error * self.activation_deriv(a[-1])]
 
             for l in range(len(a) - 2, 0, -1):
-                deltas.append(deltas[-1].dot(self.weights[l].T)*self.activation)
+                deltas.append(deltas[-1].dot(self.weights[l].T)*self.activation_deriv(a[l]))
             deltas.reverse()
             for i in range(len(self.weights)):
                 layer = np.atleast_2d(a[i])
