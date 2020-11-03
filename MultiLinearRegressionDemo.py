@@ -4,7 +4,7 @@ from numpy import genfromtxt
 import numpy as np
 from sklearn import datasets, linear_model
 
-dataPath = r"/home/nyaruko/ml/delivery1.csv"
+dataPath = r"/home/nyaruko/ml/delivery2.csv"
 deliveryData = genfromtxt(dataPath, delimiter=',')
 
 print("data:", deliveryData)
@@ -21,5 +21,6 @@ print('coefficients', regr.coef_)
 print('intercept',regr.intercept_)
 
 xP =  [[102,6]]
-yP = regr.predict(xP)
+xP1 = [[102,6,1,0,0]]
+yP = regr.predict(xP1)
 print(yP)
