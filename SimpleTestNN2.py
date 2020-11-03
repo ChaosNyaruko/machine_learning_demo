@@ -10,6 +10,8 @@ from sklearn.model_selection import train_test_split
 digits = load_digits()
 X = digits.data
 y = digits.target
+print("X[0]",X[0])
+print("y[0]", y[0])
 X -= X.min()
 X /= X.max()
 
@@ -19,6 +21,8 @@ labels_train = LabelBinarizer().fit_transform(y_train)
 labels_test = LabelBinarizer().fit_transform(y_test)
 print(labels_train)
 print("start fitting")
+print(X_train[0,:])
+print("X_train shape", X_train.shape[0], X_train.shape[1])
 nn.fit(X_train, labels_train, epochs=3000)
 predictions = []
 for i in range(X_test.shape[0]):
