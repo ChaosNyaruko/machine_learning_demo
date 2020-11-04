@@ -21,10 +21,12 @@ def computeCorrelation(X,Y):
 def polyfit(x, y, degree):
     results = {} 
     coeffs = np.polyfit(x, y, degree)
+    print("coeffs:",coeffs)
 
     results['polynomial'] = coeffs.tolist()
     
     p = np.poly1d(coeffs)
+    print("p(after poly1d):", p)
 
     yhat = p(x)
     ybar = np.sum(y)/len(y)
