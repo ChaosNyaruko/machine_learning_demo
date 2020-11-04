@@ -41,15 +41,23 @@ class Hierarchical(object):
         nodes = [ClusterNode(vec=v, id=i) for i,v in enumerate(x)]
         distances = {}
         point_num, future_num = np.shape(x)  # 特征的维度
+        print("point_num:%d, feature_num:%d"% (point_num, future_num))
         self.labels = [ -1 ] * point_num
         currentclustid = -1
+        once = 0 
         while len(nodes) > self.k:
             min_dist = math.inf
             nodes_len = len(nodes)
             closest_part = None  # 表示最相似的两个聚类
+            shouldPrint = False
+            if once == 1: 
+                shouldPrint = True
+            print("nodes_len:", nodes_len)
             for i in range(nodes_len - 1):
                 for j in range(i + 1, nodes_len):
                     # 为了不重复计算距离，保存在字典内
+                    if shouldPrint == True: 
+                        print("i:%d, j:%d, nodes[i].id:%d, nodes[i].id:%d" % (i, j, nodes[i].id,  nodes[j].id))
                     d_key = (nodes[i].id, nodes[j].id)
                     if d_key not in distances:
                         distances[d_key] = euler_distance(nodes[i].vec, nodes[j].vec)
@@ -71,6 +79,7 @@ class Hierarchical(object):
             currentclustid -= 1
             del nodes[part2], nodes[part1]   # 一定要先del索引较大的
             nodes.append(new_node)
+            once += 1 
         self.nodes = nodes
         self.calc_label()
 
@@ -99,6 +108,7 @@ iris = datasets.load_iris()
 
 my = Hierarchical(4)
 my.fit(iris.data)
+print(my.labels)
 print(np.array(my.labels))
 
 sk = cluster.AgglomerativeClustering(4)
