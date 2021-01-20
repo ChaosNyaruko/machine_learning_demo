@@ -31,38 +31,39 @@ def predict(network, x):
 
     return y
 
+if __name__ == '__main__':
+    x, t = get_data()
+    network = init_network()
 
-x, t = get_data()
-network = init_network()
+    batch_size = 100
+    accuracy_cnt = 0
+    for i in range(0, len(x), batch_size):
+        x_batch = x[i:i + batch_size]
+        y_batch = predict(network, x_batch)
+        p = np.argmax(y_batch, axis = 1) # get the index of the max element
+        accuracy_cnt += np.sum(p == t[i:i+batch_size])
 
-accuracy_cnt = 0
-for i in range(len(x)):
-    y = predict(network, x[i])
-    p = np.argmax(y) # get the index of the max element
-    if p == t[i]:
-        accuracy_cnt += 1
-
-print("Accuracy:" + str(float(accuracy_cnt) / len(x)))
-assert False
+    print("Accuracy:" + str(float(accuracy_cnt) / len(x)))
+    assert False
 
 
 
 
-(x_train, t_train), (x_test, t_test) = load_mnist(flatten=True, normalize = False)
+    (x_train, t_train), (x_test, t_test) = load_mnist(flatten=True, normalize = False)
 
-# print(x_train.shape)
-# print(x_train[0])
-# print(t_train.shape)
-# print(x_test.shape)
-# print(t_test.shape)
+    # print(x_train.shape)
+    # print(x_train[0])
+    # print(t_train.shape)
+    # print(x_test.shape)
+    # print(t_test.shape)
 
-img = x_train[0]
-label = t_train[0]
-print(label)
+    img = x_train[0]
+    label = t_train[0]
+    print(label)
 
-print(img.shape)
-img = img.reshape(28, 28)
-print(img.shape)
-img_show(img)
+    print(img.shape)
+    img = img.reshape(28, 28)
+    print(img.shape)
+    img_show(img)
 
 
